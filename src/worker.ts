@@ -10,7 +10,7 @@
 
 import handleProxy from './proxy';
 import handleRedirect from './redirect';
-import apiRouter from './router';
+import v1Router from './v1/v1Router';
 
 // Export a default object containing event handlers
 export default {
@@ -29,18 +29,11 @@ export default {
 				return handleProxy.fetch(request, env, ctx);
 		}
 
-		if (url.pathname.startsWith('/api/')) {
+		if (url.pathname.startsWith('/v1/')) {
 			// You can also use more robust routing
-			return apiRouter.handle(request);
+			return v1Router.handle(request, request);
 		}
 
-		return new Response(
-			`Try making requests to:
-      <ul>
-      <li><code><a href="/redirect?redirectUrl=https://example.com/">/redirect?redirectUrl=https://example.com/</a></code>,</li>
-      <li><code><a href="/proxy?modify&proxyUrl=https://example.com/">/proxy?modify&proxyUrl=https://example.com/</a></code>, or</li>
-      <li><code><a href="/api/todos">/api/todos</a></code></li>`,
-			{ headers: { 'Content-Type': 'text/html' } }
-		);
+		return new Response(undefined, { status: 404 });
 	},
 };
