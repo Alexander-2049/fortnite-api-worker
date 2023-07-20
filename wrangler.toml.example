@@ -1,0 +1,6 @@
+name = "fortnite-api-worker"
+main = "src/worker.ts"
+compatibility_date = "2023-07-10"
+
+[vars]
+API_TOKEN = "test"
