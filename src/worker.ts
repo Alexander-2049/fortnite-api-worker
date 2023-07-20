@@ -10,10 +10,6 @@
 
 import v1Router from './v1/v1Router';
 
-export interface Env {
-	API_TOKEN: string;
-}
-
 export interface ExtraData {
 	env: Env,
 	request: Request

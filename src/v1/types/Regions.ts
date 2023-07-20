@@ -1,0 +1,1 @@
+export type Regions = "EU" | "OCE" | "BR" | "ASIA" | "ME" | "NAC";

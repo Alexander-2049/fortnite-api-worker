@@ -1,13 +1,12 @@
 name = "fortnite-api-worker"
 main = "src/worker.ts"
 compatibility_date = "2023-07-10"
-API_TOKEN = "########-########-########-########"
 
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
 # Note: Use secrets to store sensitive data.
 # Docs: https://developers.cloudflare.com/workers/platform/environment-variables
-# [vars]
-# MY_VARIABLE = "production_value"
+[vars]
+API_TOKEN = "490819a4-ddd7e78b-c195fde7-a666dc76"
 
 # Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
 # Docs: https://developers.cloudflare.com/workers/runtime-apis/kv
