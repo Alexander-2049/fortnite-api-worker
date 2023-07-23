@@ -8,7 +8,7 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import v1Router from './v1/v1Router';
+import router from './routes';
 
 export interface ExtraData {
 	env: Env,
@@ -27,9 +27,9 @@ export default {
 			request
 		}
 
-		if (url.pathname.startsWith('/v1/')) {
+		if (url.pathname.startsWith('/')) {
 			// You can also use more robust routing
-			return v1Router.handle(request, extra);
+			return router.handle(request, extra);
 		}
 
 		return new Response(undefined, { status: 404 });

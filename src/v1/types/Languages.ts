@@ -1,1 +1,0 @@
-export type Languages = "en" | "ar" | "de" | "es" | "es-419" | "fr" | "it" | "ja" | "ko" | "pl" | "pt-BR" | "ru" | "tr" | "zh-CN" | "zh-Hant";
