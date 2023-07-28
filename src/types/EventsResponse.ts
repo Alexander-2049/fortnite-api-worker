@@ -6,12 +6,12 @@ export type EventsResponse = {
     region: Regions,
     lang: Languages,
     season: null | string | number,
-    events: Event[]
+    events: EventType[]
 }
 
-type Event = {
+export type EventType = {
     id: string,
-    display_id: string,
+    displayId: string,
     region: Regions,
     detectionDate: string,
     name_line1: string,
@@ -44,7 +44,7 @@ type RenderData = {
     base_color: string,
 }
 
-type Window = {
+export type Window = {
     windowId: string,
     beginTime: string,
     endTime: string,

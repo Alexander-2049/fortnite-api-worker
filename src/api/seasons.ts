@@ -4,7 +4,7 @@ import { Season, SeasonsResponse } from "../types/SeasonsResponse";
 export async function seasons(lang: Languages = Languages.ENGLISH, env: Env): Promise<SeasonsResponse | Error> {
   try {
       const url = `https://fortniteapi.io/v1/seasons/list?lang=${lang}`;
-      const response = await fetch(url, { method: "GET", headers: { Authorization: env.API_TOKEN }, });
+      const response = await fetch(url, { method: "GET", headers: { Authorization: env.API_TOKEN }, cf: { cacheEverything: true } });
       const data: SeasonsResponse = await response.json();
       
       return data;

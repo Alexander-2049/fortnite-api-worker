@@ -1,9 +1,12 @@
 import { IRequest, Router } from 'itty-router';
 import { ExtraData } from '../worker';
-import { events, eventsActive } from '../api/events';
+import { events, eventsActive, eventsGet, eventsWindow } from '../api/events';
 import { headers } from '.';
 import getRegionFromString from '../utils/getRegionFromString';
 import getLanguageFromString from '../utils/getLanguageFromString';
+import getWindowIdFromQuery from '../utils/getWindowIdFromQuery';
+import getPageFromQuery from '../utils/getPageFromQuery';
+import getEventIdFromQuery from '../utils/getEventIdFromQuery';
 
 export async function routeEventsAll(data: IRequest, extra: ExtraData) {
     const {env} = extra;
@@ -11,7 +14,7 @@ export async function routeEventsAll(data: IRequest, extra: ExtraData) {
     const region = getRegionFromString(data.query.region);
     const language = getLanguageFromString(data.query.lang);
     
-    const result = await events(language, region, env);
+    const result = await events(env, language, region);
 
     return new Response(
         JSON.stringify({
@@ -26,7 +29,7 @@ export async function routeEventsActive(data: IRequest, extra: ExtraData) {
     const region = getRegionFromString(data.query.region);
     const language = getLanguageFromString(data.query.lang);
     
-    const result = await eventsActive(language, region, env);
+    const result = await eventsActive(env, language, region);
 
     return new Response(
         JSON.stringify({
@@ -35,22 +38,33 @@ export async function routeEventsActive(data: IRequest, extra: ExtraData) {
     );
 }
 
-// const getFortniteEventsActive = require("../../api/getFortniteEventsActive");
-// const customError = require('../../utils/customError');
+export async function routeEventsGet(data: IRequest, extra: ExtraData) {
+    const {env} = extra;
 
-// const listActive = async (req, res) => {
-//     let region = req.query.region || global.defaultRegion;
-//     let lang = req.query.lang || global.defaultLanguage;
+    const eventId = getEventIdFromQuery(data.query.eventId);
+    const windowId = getWindowIdFromQuery(data.query.windowId);
+    const page = getPageFromQuery(data.query.page);
+    
+    const result = await eventsGet(env, eventId, windowId, page);
 
-//     let result;
-//     try {
-//       result = await getFortniteEventsActive(lang, region); 
-//     } catch (error) {
-//       return res
-//         .status(500)
-//         .json(customError(error.message));
-//     }
-//     return res.json(result);
-// }
+    return new Response(
+        JSON.stringify({
+            ...result
+        }), { headers: headers }
+    );
+}
 
-// module.exports = listActive;
+export async function routeEventsWindow(data: IRequest, extra: ExtraData) {
+    const {env} = extra;
+
+    const windowId = getWindowIdFromQuery(data.query.windowId);
+    const page = getPageFromQuery(data.query.page);
+    
+    const result = await eventsWindow(env, windowId, page);
+
+    return new Response(
+        JSON.stringify({
+            ...result
+        }), { headers: headers }
+    );
+}
