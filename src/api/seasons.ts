@@ -1,7 +1,7 @@
 import { Languages } from "../types/Languages";
 import { Season, SeasonsResponse } from "../types/SeasonsResponse";
 
-export async function seasons(lang: Languages = Languages.ENGLISH, env: Env): Promise<SeasonsResponse | Error> {
+export async function seasons(env: Env, lang: Languages = Languages.ENGLISH): Promise<SeasonsResponse | Error> {
   try {
       const url = `https://fortniteapi.io/v1/seasons/list?lang=${lang}`;
       const response = await fetch(url, { method: "GET", headers: { Authorization: env.API_TOKEN }, cf: { cacheEverything: true } });
@@ -15,9 +15,9 @@ export async function seasons(lang: Languages = Languages.ENGLISH, env: Env): Pr
   }
 }
 
-export async function seasonsCurrent(lang: Languages = Languages.ENGLISH, env: Env): Promise<Season | Error> {
+export async function seasonsCurrent(env: Env, lang: Languages = Languages.ENGLISH): Promise<Season | Error> {
     try {
-        const response = await seasons(lang, env);
+        const response = await seasons(env, lang);
         if(response instanceof Error) throw new Error('something went wrong');
         const data = response.seasons.filter(e => {
             if(new Date(e.startDate) < new Date() && new Date() < new Date(e.endDate)) return e;

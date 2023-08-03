@@ -1,6 +1,7 @@
 import { Router } from 'itty-router';
 import { routeEventsActive, routeEventsAll, routeEventsGet, routeEventsWindow } from './events';
 import { routeSeasons, routeSeasonsCurrent } from './seasons';
+import { routeLoot } from './loot';
 
 // now let's create a router (note the lack of "new")
 const router = Router();
@@ -17,6 +18,7 @@ router.get('/events/window', routeEventsWindow);
 router.get('/events/get', routeEventsGet);
 router.get('/seasons/list', routeSeasons);
 router.get('/seasons/current', routeSeasonsCurrent);
+router.get('/loot/list', routeLoot);
 router.get('*', () => {
     return new Response(undefined, { status: 404 });
 });

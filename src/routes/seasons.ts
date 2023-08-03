@@ -9,7 +9,7 @@ export async function routeSeasons(data: IRequest, extra: ExtraData) {
 
     const language = getLanguageFromString(data.query.lang);
     
-    const result = await seasons(language, env);
+    const result = await seasons(env, language);
 
     return new Response(
         JSON.stringify({
@@ -23,7 +23,7 @@ export async function routeSeasonsCurrent(data: IRequest, extra: ExtraData) {
 
     const language = getLanguageFromString(data.query.lang);
     
-    const result = await seasonsCurrent(language, env);
+    const result = await seasonsCurrent(env, language);
 
     return new Response(
         JSON.stringify({
