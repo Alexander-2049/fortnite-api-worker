@@ -1,5 +1,5 @@
 import { Router } from 'itty-router';
-import { routeEventsActive, routeEventsAll, routeEventsGet, routeEventsWindow } from './events';
+import { routeEventsActive, routeEventsActiveCut, routeEventsAll, routeEventsGet, routeEventsWindow } from './events';
 import { routeSeasons, routeSeasonsCurrent } from './seasons';
 import { routeLoot } from './loot';
 
@@ -14,6 +14,7 @@ export const headers = {
 // GET collection index
 router.get('/events/list', routeEventsAll);
 router.get('/events/list/active', routeEventsActive);
+router.get('/events/list/active/cut', routeEventsActiveCut);
 router.get('/events/window', routeEventsWindow);
 router.get('/events/get', routeEventsGet);
 router.get('/seasons/list', routeSeasons);

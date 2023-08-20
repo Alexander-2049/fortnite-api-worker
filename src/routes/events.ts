@@ -1,6 +1,6 @@
 import { IRequest, Router } from 'itty-router';
 import { ExtraData } from '../worker';
-import { events, eventsActive, eventsGet, eventsWindow } from '../api/events';
+import { events, eventsActive, eventsActiveCut, eventsGet, eventsWindow } from '../api/events';
 import { headers } from '.';
 import getRegionFromString from '../utils/getRegionFromString';
 import getLanguageFromString from '../utils/getLanguageFromString';
@@ -30,6 +30,21 @@ export async function routeEventsActive(data: IRequest, extra: ExtraData) {
     const language = getLanguageFromString(data.query.lang);
     
     const result = await eventsActive(env, language, region);
+
+    return new Response(
+        JSON.stringify({
+            ...result
+        }), { headers: headers }
+    );
+}
+
+export async function routeEventsActiveCut(data: IRequest, extra: ExtraData) {
+    const {env} = extra;
+
+    const region = getRegionFromString(data.query.region);
+    const language = getLanguageFromString(data.query.lang);
+    
+    const result = await eventsActiveCut(env, language, region);
 
     return new Response(
         JSON.stringify({

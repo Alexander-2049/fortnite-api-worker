@@ -1,4 +1,5 @@
 import { EventsResponse } from '../types/EventsResponse';
+import { EventTypeCut, EventsResponseCut } from '../types/EventsResponseCut';
 import { Languages } from '../types/Languages';
 import { Regions } from '../types/Regions';
 import { WindowResponse } from '../types/WindowResponse';
@@ -32,6 +33,38 @@ export async function eventsActive(env: Env, lang: Languages = Languages.ENGLISH
         })
 
         return data;
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+          return error;
+        } else return new Error('something went wrong');
+    }
+}
+
+export async function eventsActiveCut(env: Env, lang: Languages = Languages.ENGLISH, region: Regions = Regions.ALL): Promise<EventsResponseCut | Error> {
+    try {
+        const activeEvents = await eventsActive(env, lang, region);
+        if(activeEvents instanceof Error) throw new Error(activeEvents.message);
+
+        const eventsCut: EventTypeCut[] = activeEvents.events.map(e => {
+            return {
+                id: e.id,
+                region: e.region,
+                name_line1: e.name_line1,
+                name_line2: e.name_line2,
+                poster: e.poster,
+                schedule: e.schedule,
+                beginTime: e.beginTime,
+                endTime: e.endTime,
+                platforms: e.platforms,
+                // renderData: e.renderData,
+                windows: e.windows
+            }
+        })
+
+        return {
+            ...activeEvents,
+            events: eventsCut
+        };
     } catch (error: unknown) {
         if (error instanceof Error) {
           return error;
